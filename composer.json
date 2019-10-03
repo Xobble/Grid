@@ -1,0 +1,16 @@
+{
+    "name": "wobble/grid-ref",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mark Allman",
+            "email": "mark@bixbite.co.uk"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wobble\\": "src/Wobble/"
+        }
+    },
+    "require": {}
+}
