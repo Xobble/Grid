@@ -5,18 +5,16 @@ use PDO;
 use PDOException;
 
 use Wobble\Grid\Converter;
+use Wobble\Grid\GridRef\ChannelIslandsGridRef;
 use Wobble\Grid\GridRef\IrishGridRef;
 use Wobble\Grid\GridRef\BritishGridRef;
-use Wobble\Grid\GridRef\ChannelIslandsWAGridRef;
-use Wobble\Grid\GridRef\ChannelIslandsWVGridRef;
 
 require "./vendor/autoload.php";
 
 $converter = new Converter([
     new IrishGridRef(),
     new BritishGridRef(),
-    new ChannelIslandsWAGridRef(),
-    new ChannelIslandsWVGridRef()
+    new ChannelIslandsGridRef(),
 ]);
 
 
@@ -31,7 +29,7 @@ try {
 }
 
 $count = 0;
-foreach($dsn->query('SELECT * FROM record') as $row) {
+foreach($dsn->query('SELECT * FROM record WHERE datum="CI"') as $row) {
 
     $gridRef = $row['grid_ref'];
     $count++;
