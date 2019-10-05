@@ -55,8 +55,15 @@ class ChannelIslandsGridRef implements GridRef
         $gridRef = $isA ? 'WA' : 'WV';
         $places = log10(self::GRID_SIZE) - log10($accuracy);
 
-        $eastingPart = substr(substr($cartesian->getEasting(), 1), 0, $places);
-        $northingPart = substr(substr($northing, 2), 0, $places);
+        $processPart = function($part) use($places) {
+            $part = str_replace('.', '', $part);
+            $part = substr($part, 0, $places);
+
+            return $part;
+        };
+
+        $eastingPart = $processPart(substr($cartesian->getEasting(), 1));
+        $northingPart = $processPart(substr($northing, 2));
 
         return $gridRef.$eastingPart.$northingPart;
     }

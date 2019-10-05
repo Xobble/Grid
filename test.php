@@ -4,8 +4,7 @@ namespace Wibble;
 
 use Wobble\Grid\Converter;
 use Wobble\Grid\GridRef\BritishGridRef;
-use Wobble\Grid\GridRef\ChannelIslandsWAGridRef;
-use Wobble\Grid\GridRef\ChannelIslandsWVGridRef;
+use Wobble\Grid\GridRef\ChannelIslandsGridRef;
 use Wobble\Grid\GridRef\IrishGridRef;
 use Wobble\Grid\Cartesian;
 
@@ -14,8 +13,7 @@ require "./vendor/autoload.php";
 $converter = new Converter([
     new IrishGridRef(),
     new BritishGridRef(),
-    new ChannelIslandsWAGridRef(),
-    new ChannelIslandsWVGridRef()
+    new ChannelIslandsGridRef(),
 ]);
 
 function test(Converter $converter, $gridRef) {
@@ -36,6 +34,7 @@ echo "-------------------------------\n";
 test($converter, 'O1590434671');
 test($converter, 'SX4668270419');
 test($converter, 'HP 62117 16164');
+test($converter, 'WV113112');
 echo "\n";
 
 //echo "eastingNorthing -> grid -> eastingNorthing\n";
