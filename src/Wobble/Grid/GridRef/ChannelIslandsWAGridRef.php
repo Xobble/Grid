@@ -1,22 +1,23 @@
 <?php
 
-namespace Wobble\GridRef\Converter;
+namespace Wobble\Grid\GridRef;
 
-use Wobble\GridRef\Cartesian;
+use Wobble\Grid\GridRef;
+use Wobble\Grid\Cartesian;
 
-class ChannelIslandsWVGridRef implements GridRefConverter
+class ChannelIslandsWAGridRef implements GridRef
 {
     /** @var GridRefHelper */
     protected $helper;
 
     public function __construct()
     {
-        $this->helper = new GridRefHelper($this->getDatum(), 2500000, 2, 0, 5400000);
+        $this->helper = new GridRefHelper($this->getDatum(), 2500000, 2, 0, 5100000);
     }
 
     public function supportsGridRef(string $gridRef): bool
     {
-        if (!preg_match('/^WV(?P<number>[ \d]*)$/', $gridRef, $matches)) {
+        if (!preg_match('/^WA(?P<number>[ \d]*)$/', $gridRef, $matches)) {
             return false;
         }
 
@@ -26,7 +27,7 @@ class ChannelIslandsWVGridRef implements GridRefConverter
 
     public function supportsCartesian(Cartesian $cartesian): bool
     {
-        if (substr($cartesian->getNorthing(), 0, 2) !== '54') {
+        if (substr($cartesian->getNorthing(), 0, 2) !== '55') {
             return false;
         }
 

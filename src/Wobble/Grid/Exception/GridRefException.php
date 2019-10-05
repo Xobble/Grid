@@ -1,6 +1,6 @@
 <?php
 
-namespace Wobble\GridRef\Exception;
+namespace Wobble\Grid\Exception;
 
 class GridRefException extends \Exception
 {

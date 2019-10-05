@@ -2,12 +2,12 @@
 
 namespace Wibble;
 
-use Wobble\GridRef\Converter;
-use Wobble\GridRef\Converter\BritishGridRef;
-use Wobble\GridRef\Converter\ChannelIslandsWAGridRef;
-use Wobble\GridRef\Converter\ChannelIslandsWVGridRef;
-use Wobble\GridRef\Converter\IrishGridRef;
-use Wobble\GridRef\Cartesian;
+use Wobble\Grid\Converter;
+use Wobble\Grid\GridRef\BritishGridRef;
+use Wobble\Grid\GridRef\ChannelIslandsWAGridRef;
+use Wobble\Grid\GridRef\ChannelIslandsWVGridRef;
+use Wobble\Grid\GridRef\IrishGridRef;
+use Wobble\Grid\Cartesian;
 
 require "./vendor/autoload.php";
 

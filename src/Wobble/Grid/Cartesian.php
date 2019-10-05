@@ -1,6 +1,6 @@
 <?php
 
-namespace Wobble\GridRef;
+namespace Wobble\Grid;
 
 class Cartesian
 {

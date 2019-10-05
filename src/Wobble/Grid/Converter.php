@@ -1,18 +1,17 @@
 <?php
 
-namespace Wobble\GridRef;
+namespace Wobble\Grid;
 
-use Wobble\GridRef\Converter\GridRefConverter;
-use Wobble\GridRef\Exception\GridRefException;
+use Wobble\Grid\Exception\GridRefException;
 
 class Converter
 {
-    /** @var array|GridRefConverter[] */
+    /** @var array|GridRef[] */
     protected $converters;
 
     /**
      * Converter constructor.
-     * @param array|GridRefConverter[] $converters
+     * @param array|GridRef[] $converters
      */
     public function __construct(array $converters = [])
     {

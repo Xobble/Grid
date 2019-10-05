@@ -4,11 +4,11 @@ namespace Wibble;
 use PDO;
 use PDOException;
 
-use Wobble\GridRef\Converter;
-use Wobble\GridRef\Converter\IrishGridRef;
-use Wobble\GridRef\Converter\BritishGridRef;
-use Wobble\GridRef\Converter\ChannelIslandsWAGridRef;
-use Wobble\GridRef\Converter\ChannelIslandsWVGridRef;
+use Wobble\Grid\Converter;
+use Wobble\Grid\GridRef\IrishGridRef;
+use Wobble\Grid\GridRef\BritishGridRef;
+use Wobble\Grid\GridRef\ChannelIslandsWAGridRef;
+use Wobble\Grid\GridRef\ChannelIslandsWVGridRef;
 
 require "./vendor/autoload.php";
 

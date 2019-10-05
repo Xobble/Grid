@@ -1,39 +1,36 @@
 <?php
 
-namespace Wobble\GridRef\Converter;
+namespace Wobble\Grid\GridRef;
 
-use Wobble\GridRef\Cartesian;
+use Wobble\Grid\GridRef;
+use Wobble\Grid\Cartesian;
 
-class BritishGridRef implements GridRefConverter
+class ChannelIslandsWVGridRef implements GridRef
 {
     /** @var GridRefHelper */
     protected $helper;
 
     public function __construct()
     {
-        $this->helper = new GridRefHelper($this->getDatum(), 2500000, 2, -1000000, -500000);
+        $this->helper = new GridRefHelper($this->getDatum(), 2500000, 2, 0, 5400000);
     }
 
     public function supportsGridRef(string $gridRef): bool
     {
-        if (!preg_match('/^(?P<prefix>[A-HJ-Z]{2})(?P<number>[ \d]*)$/', $gridRef, $matches)) {
+        if (!preg_match('/^WV(?P<number>[ \d]*)$/', $gridRef, $matches)) {
             return false;
         }
 
-        $prefix = $matches['prefix'];
         $number = str_replace(' ', '', $matches['number']);
-
-        if ($prefix === 'WA' || $prefix === 'WV') {
-            return false;
-        }
-
-        // TODO: Check grid prefix is otherwise valid
-
         return (strlen($number) % 2 === 0);
     }
 
     public function supportsCartesian(Cartesian $cartesian): bool
     {
+        if (substr($cartesian->getNorthing(), 0, 2) !== '54') {
+            return false;
+        }
+
         return $cartesian->getDatum() === $this->getDatum();
     }
 
@@ -49,6 +46,6 @@ class BritishGridRef implements GridRefConverter
 
     public function getDatum(): string
     {
-        return 'GB';
+        return 'CI';
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace Wobble\GridRef\Converter;
+namespace Wobble\Grid\GridRef;
 
-use Wobble\GridRef\Cartesian;
+use Wobble\Grid\GridRef;
+use Wobble\Grid\Cartesian;
 
-class IrishGridRef implements GridRefConverter
+class IrishGridRef implements GridRef
 {
     /** @var GridRefHelper */
     protected $helper;
@@ -34,7 +35,7 @@ class IrishGridRef implements GridRefConverter
         return $this->helper->toCartesian($gridRef);
     }
 
-    public function toGridRef(Cartesian $cartesian): string
+    public function toGridRef(Cartesian $cartesian) : string
     {
         return $this->helper->toGridRef($cartesian);
     }

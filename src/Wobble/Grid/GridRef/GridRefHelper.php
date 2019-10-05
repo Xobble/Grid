@@ -1,8 +1,8 @@
 <?php
 
-namespace Wobble\GridRef\Converter;
+namespace Wobble\Grid\GridRef;
 
-use Wobble\GridRef\Cartesian;
+use Wobble\Grid\Cartesian;
 
 class GridRefHelper
 {
