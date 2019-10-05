@@ -50,6 +50,6 @@ class BritishGridRef implements GridRef
 
     public function getDatum(): string
     {
-        return 'GB';
+        return 'EPSG:27700';
     }
 }

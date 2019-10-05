@@ -42,6 +42,6 @@ class IrishGridRef implements GridRef
 
     public function getDatum(): string
     {
-        return 'IRISH';
+        return 'EPSG:29902';
     }
 }

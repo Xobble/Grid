@@ -46,6 +46,6 @@ class ChannelIslandsWAGridRef implements GridRef
 
     public function getDatum(): string
     {
-        return 'CI';
+        return 'EPSG:32630';
     }
 }
