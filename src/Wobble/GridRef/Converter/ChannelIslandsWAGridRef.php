@@ -2,7 +2,7 @@
 
 namespace Wobble\GridRef\Converter;
 
-use Wobble\GridRef\EastingNorthing;
+use Wobble\GridRef\Cartesian;
 
 class ChannelIslandsWAGridRef implements GridRefConverter
 {
@@ -24,23 +24,23 @@ class ChannelIslandsWAGridRef implements GridRefConverter
         return (strlen($number) % 2 === 0);
     }
 
-    public function supportsEastingNorthing(EastingNorthing $eastingNorthing): bool
+    public function supportsCartesian(Cartesian $cartesian): bool
     {
-        if (substr($eastingNorthing->getNorthing(), 0, 2) !== '55') {
+        if (substr($cartesian->getNorthing(), 0, 2) !== '55') {
             return false;
         }
 
-        return $eastingNorthing->getDatum() === $this->getDatum();
+        return $cartesian->getDatum() === $this->getDatum();
     }
 
-    public function toEastingNorthing(string $gridRef): EastingNorthing
+    public function toCartesian(string $gridRef): Cartesian
     {
-        return $this->helper->toEastingNorthing($gridRef);
+        return $this->helper->toCartesian($gridRef);
     }
 
-    public function toGridRef(EastingNorthing $eastingNorthing): string
+    public function toGridRef(Cartesian $cartesian): string
     {
-        return $this->helper->toGridRef($eastingNorthing);
+        return $this->helper->toGridRef($cartesian);
     }
 
     public function getDatum(): string

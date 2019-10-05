@@ -2,36 +2,47 @@
 
 namespace Wobble\GridRef;
 
+use Wobble\GridRef\Converter\GridRefConverter;
 use Wobble\GridRef\Exception\GridRefException;
 
 class Converter
 {
-    /** @var GridRefConverter[] */
+    /** @var array|GridRefConverter[] */
     protected $converters;
 
     /**
      * Converter constructor.
-     * @param array $converters
+     * @param array|GridRefConverter[] $converters
      */
     public function __construct(array $converters = [])
     {
         $this->converters = $converters;
     }
 
-    public function toEastingNorthing(string $gridRef) : EastingNorthing {
+    /**
+     * @param string $gridRef
+     * @return Cartesian
+     * @throws GridRefException
+     */
+    public function toCartesian(string $gridRef) : Cartesian {
         foreach($this->converters as $converter) {
             if ($converter->supportsGridRef($gridRef)) {
-                return $converter->toEastingNorthing($gridRef);
+                return $converter->toCartesian($gridRef);
             }
         }
 
         throw new GridRefException('Invalid or unsupported grid reference');
     }
 
-    public function toGridRef(EastingNorthing $eastingNorthing) : string {
+    /**
+     * @param Cartesian $cartesian
+     * @return string
+     * @throws GridRefException
+     */
+    public function toGridRef(Cartesian $cartesian) : string {
         foreach($this->converters as $converter) {
-            if ($converter->supportsEastingNorthing($eastingNorthing)) {
-                return $converter->toGridRef($eastingNorthing);
+            if ($converter->supportsCartesian($cartesian)) {
+                return $converter->toGridRef($cartesian);
             }
         }
 

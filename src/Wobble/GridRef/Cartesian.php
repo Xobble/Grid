@@ -2,7 +2,7 @@
 
 namespace Wobble\GridRef;
 
-class EastingNorthing
+class Cartesian
 {
     /** @var string */
     protected $easting;
@@ -16,12 +16,6 @@ class EastingNorthing
     /** @var string */
     protected $datum;
 
-    /**
-     * EastingNorthing constructor.
-     * @param string $datum
-     * @param string $easting
-     * @param string $northing
-     */
     public function __construct(string $datum, string $easting, string $northing, string $accuracy)
     {
         $this->datum = $datum;

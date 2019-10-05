@@ -2,7 +2,7 @@
 
 namespace Wobble\GridRef\Converter;
 
-use Wobble\GridRef\EastingNorthing;
+use Wobble\GridRef\Cartesian;
 
 class BritishGridRef implements GridRefConverter
 {
@@ -29,23 +29,22 @@ class BritishGridRef implements GridRefConverter
 
         // TODO: Check grid prefix is otherwise valid
 
-        $number = str_replace(' ', '', $matches['number']);
         return (strlen($number) % 2 === 0);
     }
 
-    public function supportsEastingNorthing(EastingNorthing $eastingNorthing): bool
+    public function supportsCartesian(Cartesian $cartesian): bool
     {
-        return $eastingNorthing->getDatum() === $this->getDatum();
+        return $cartesian->getDatum() === $this->getDatum();
     }
 
-    public function toEastingNorthing(string $gridRef): EastingNorthing
+    public function toCartesian(string $gridRef): Cartesian
     {
-        return $this->helper->toEastingNorthing($gridRef);
+        return $this->helper->toCartesian($gridRef);
     }
 
-    public function toGridRef(EastingNorthing $eastingNorthing): string
+    public function toGridRef(Cartesian $cartesian): string
     {
-        return $this->helper->toGridRef($eastingNorthing);
+        return $this->helper->toGridRef($cartesian);
     }
 
     public function getDatum(): string

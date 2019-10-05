@@ -36,7 +36,7 @@ foreach($dsn->query('SELECT * FROM record') as $row) {
     $gridRef = $row['grid_ref'];
     $count++;
 
-    $eastingNorthing = $converter->toEastingNorthing($gridRef);
+    $eastingNorthing = $converter->toCartesian($gridRef);
 
     $log = "Failed for $gridRef\n";
     $log .= sprintf("->eastingNorthing = %s,%s,%s [Expected: %s,%s,%s]\n",

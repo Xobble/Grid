@@ -7,7 +7,7 @@ use Wobble\GridRef\Converter\BritishGridRef;
 use Wobble\GridRef\Converter\ChannelIslandsWAGridRef;
 use Wobble\GridRef\Converter\ChannelIslandsWVGridRef;
 use Wobble\GridRef\Converter\IrishGridRef;
-use Wobble\GridRef\EastingNorthing;
+use Wobble\GridRef\Cartesian;
 
 require "./vendor/autoload.php";
 
@@ -19,15 +19,15 @@ $converter = new Converter([
 ]);
 
 function test(Converter $converter, $gridRef) {
-    $eastingNorthing = $converter->toEastingNorthing($gridRef);
+    $eastingNorthing = $converter->toCartesian($gridRef);
     echo "{$gridRef} = {$eastingNorthing}\n";
     echo $converter->toGridRef($eastingNorthing)."\n\n";
 }
 
-function testEastingNorthing(Converter $converter, EastingNorthing $eastingNorthing) {
+function testEastingNorthing(Converter $converter, Cartesian $eastingNorthing) {
     $gridRef = $converter->toGridRef($eastingNorthing);
     echo "{$eastingNorthing} = {$gridRef}\n";
-    echo $converter->toEastingNorthing($gridRef)."\n\n";
+    echo $converter->toCartesian($gridRef)."\n\n";
 }
 
 echo "grid -> eastingNorthing -> grid\n";

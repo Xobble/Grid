@@ -2,7 +2,7 @@
 
 namespace Wobble\GridRef\Converter;
 
-use Wobble\GridRef\EastingNorthing;
+use Wobble\GridRef\Cartesian;
 
 class GridRefHelper
 {
@@ -49,7 +49,7 @@ class GridRefHelper
         }
     }
 
-    public function toEastingNorthing(string $gridRef) : EastingNorthing
+    public function toCartesian(string $gridRef) : Cartesian
     {
         $gridRef = str_replace(' ', '', $gridRef);
         $easting = $this->eastingOriginOffset;
@@ -76,16 +76,16 @@ class GridRefHelper
         $easting += (intval(substr($gridRef, 0, $numberPartLength)) * $accuracy);
         $northing += (intval(substr($gridRef, $numberPartLength)) * $accuracy);
 
-        return new EastingNorthing($this->datum, $easting, $northing, $accuracy);
+        return new Cartesian($this->datum, $easting, $northing, $accuracy);
     }
 
-    public function toGridRef(EastingNorthing $eastingNorthing) : string
+    public function toGridRef(Cartesian $cartesian) : string
     {
         $gridRef = '';
         $gridSize = $this->initialGridSize;
 
-        $easting = $eastingNorthing->getEasting() - $this->eastingOriginOffset;
-        $northing = $eastingNorthing->getNorthing() - $this->northingOriginOffset;
+        $easting = $cartesian->getEasting() - $this->eastingOriginOffset;
+        $northing = $cartesian->getNorthing() - $this->northingOriginOffset;
 
         // Determine letter parts
         for($z=0; $z<$this->letterPositions; $z++) {
@@ -97,7 +97,7 @@ class GridRefHelper
             $gridRef .= $this->reverseMapping[$i][$j];
         }
 
-        $accuracy = $eastingNorthing->getAccuracy();
+        $accuracy = $cartesian->getAccuracy();
         $places = log10($gridSize) - log10($accuracy);
 
         $gridRef .= $this->padMeasurement($easting, $accuracy, $places);
