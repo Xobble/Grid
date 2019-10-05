@@ -40,7 +40,11 @@ class IrishGridRef implements GridRef
         return $this->helper->toGridRef($cartesian);
     }
 
-    public function getDatum(): string
+    public function getGridReferenceName() : string {
+        return 'Irish Grid';
+    }
+
+    public function getDatum() : string
     {
         return 'EPSG:29902';
     }

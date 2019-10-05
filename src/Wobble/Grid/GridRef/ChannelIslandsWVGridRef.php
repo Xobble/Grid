@@ -44,6 +44,11 @@ class ChannelIslandsWVGridRef implements GridRef
         return $this->helper->toGridRef($cartesian);
     }
 
+    public function getGridReferenceName(): string
+    {
+        return 'Channel Islands Grid (WV)';
+    }
+
     public function getDatum(): string
     {
         return 'EPSG:32630';

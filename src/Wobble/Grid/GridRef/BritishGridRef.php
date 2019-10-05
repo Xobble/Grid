@@ -48,6 +48,11 @@ class BritishGridRef implements GridRef
         return $this->helper->toGridRef($cartesian);
     }
 
+    public function getGridReferenceName(): string
+    {
+        return 'British National Grid';
+    }
+
     public function getDatum(): string
     {
         return 'EPSG:27700';
