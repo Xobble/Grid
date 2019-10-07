@@ -1,6 +1,7 @@
 {
     "name": "wobble/grid",
     "type": "library",
+    "description": "A small library to assist with converting between British National Grid, Irish Grid and Channel Islands Grid references and their cartesian representations",
     "authors": [
         {
             "name": "Mark Allman",
@@ -12,5 +13,8 @@
             "Wobble\\": "src/Wobble/"
         }
     },
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    }
 }

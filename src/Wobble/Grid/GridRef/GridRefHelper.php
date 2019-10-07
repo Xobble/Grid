@@ -113,7 +113,7 @@ class GridRefHelper
         return [$count, $remainder];
     }
 
-    protected function padMeasurement(int $measurement, int $accuracy, int $places) : string {
+    protected function padMeasurement(int $measurement, float $accuracy, int $places) : string {
         $measurement = str_replace('.', '', $measurement);
         $measurement = intval($measurement) / $accuracy;
         $measurement = substr(strval($measurement), 0, $places);
