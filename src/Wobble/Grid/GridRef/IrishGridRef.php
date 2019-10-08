@@ -10,14 +10,30 @@ class IrishGridRef implements GridRef
     /** @var GridRefHelper */
     protected $helper;
 
-    public function __construct()
+    /** @var array */
+    protected $options;
+
+    public function __construct(array $options = [])
     {
         $this->helper = new GridRefHelper($this->getDatum(), 500000, 1);
+
+        $this->options = array_merge([
+            'allowed_references' => null,
+            'grid_exclude_channel_islands' => true,
+        ], $options);
+
+        $this->options['allowed_references'] = $this->helper->processAllowedReferences($this->options['allowed_references']);
     }
 
     public function supportsGridRef(string $gridRef) : bool
     {
         if (!preg_match('/^[A-HJ-Z](?P<number>[ \d]*)$/', $gridRef, $matches)) {
+            return false;
+        }
+
+        $prefix = $gridRef[0];
+
+        if ($this->options['allowed_references'] && !isset($this->options['allowed_references'][$prefix])) {
             return false;
         }
 

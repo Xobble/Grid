@@ -106,6 +106,12 @@ class GridRefHelper
         return $gridRef;
     }
 
+    public function processAllowedReferences($allowedReferences) : ?array {
+        return is_array($allowedReferences) ?
+            array_combine($allowedReferences, $allowedReferences) :
+            null;
+    }
+
     protected function getCountAndRemainder(int $x, int $size) : array {
         $count = floor($x / $size);
         $remainder = $x - ($count * $size);
