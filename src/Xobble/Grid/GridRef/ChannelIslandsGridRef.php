@@ -1,9 +1,9 @@
 <?php
 
-namespace Wobble\Grid\GridRef;
+namespace Xobble\Grid\GridRef;
 
-use Wobble\Grid\GridRef;
-use Wobble\Grid\Cartesian;
+use Xobble\Grid\GridRef;
+use Xobble\Grid\Cartesian;
 
 class ChannelIslandsGridRef implements GridRef
 {

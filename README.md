@@ -4,11 +4,11 @@ A small library to assist with converting between British National Grid, Irish G
 ## Usage
 
 ```php
-    use Wobble\Grid\Cartesian;
-    use Wobble\Grid\Converter;
-    use Wobble\Grid\GridRef\ChannelIslandsGridRef;
-    use Wobble\Grid\GridRef\IrishGridRef;
-    use Wobble\Grid\GridRef\BritishGridRef;
+    use Xobble\Grid\Cartesian;
+    use Xobble\Grid\Converter;
+    use Xobble\Grid\GridRef\ChannelIslandsGridRef;
+    use Xobble\Grid\GridRef\IrishGridRef;
+    use Xobble\Grid\GridRef\BritishGridRef;
 
     $converter = new Converter([
         new IrishGridRef(),

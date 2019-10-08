@@ -1,6 +1,6 @@
 <?php
 
-namespace Wobble\Grid;
+namespace Xobble\Grid;
 
 interface GridRef
 {

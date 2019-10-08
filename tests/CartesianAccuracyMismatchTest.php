@@ -1,10 +1,10 @@
 <?php
 
-namespace Wobble\Grid\Tests;
+namespace Xobble\Grid\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Wobble\Grid\Cartesian;
-use Wobble\Grid\Exception\GridRefException;
+use Xobble\Grid\Cartesian;
+use Xobble\Grid\Exception\GridRefException;
 
 class CartesianAccuracyMismatchTest extends TestCase
 {

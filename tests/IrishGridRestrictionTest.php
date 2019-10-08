@@ -1,9 +1,9 @@
 <?php
 
-namespace Wobble\Grid\Tests;
+namespace Xobble\Grid\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Wobble\Grid\GridRef\IrishGridRef;
+use Xobble\Grid\GridRef\IrishGridRef;
 
 class IrishGridRestrictionTest extends TestCase
 {

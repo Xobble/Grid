@@ -1,5 +1,5 @@
 {
-    "name": "wobble/grid",
+    "name": "xobble/grid",
     "type": "library",
     "description": "A small library to assist with converting between British National Grid, Irish Grid and Channel Islands Grid references and their cartesian representations",
     "authors": [
@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Wobble\\": "src/Wobble/"
+            "Xobble\\": "src/Xobble/"
         }
     },
     "require": {

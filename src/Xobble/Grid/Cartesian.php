@@ -1,8 +1,8 @@
 <?php
 
-namespace Wobble\Grid;
+namespace Xobble\Grid;
 
-use Wobble\Grid\Exception\GridRefException;
+use Xobble\Grid\Exception\GridRefException;
 
 class Cartesian
 {
