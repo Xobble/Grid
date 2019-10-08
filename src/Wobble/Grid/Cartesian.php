@@ -2,6 +2,8 @@
 
 namespace Wobble\Grid;
 
+use Wobble\Grid\Exception\GridRefException;
+
 class Cartesian
 {
     /** @var string */
@@ -16,12 +18,40 @@ class Cartesian
     /** @var string */
     protected $datum;
 
+    /**
+     * Cartesian constructor.
+     * @param string $datum
+     * @param string $easting
+     * @param string $northing
+     * @param string $accuracy
+     *
+     * @throws GridRefException
+     */
     public function __construct(string $datum, string $easting, string $northing, string $accuracy)
     {
+        $this->checkAccuracyAgrees($accuracy, $easting);
+        $this->checkAccuracyAgrees($accuracy, $northing);
+
         $this->datum = $datum;
         $this->easting = $easting;
         $this->northing = $northing;
         $this->accuracy = $accuracy;
+    }
+
+    /**
+     * @param $accuracy
+     * @param $distance
+     *
+     * @throws GridRefException
+     */
+    protected function checkAccuracyAgrees($accuracy, $distance) : void {
+        $multiplier = $accuracy >= 1 ? 1 :  pow(10, abs(log10($accuracy)));
+        $distanceInAccuracyUnits = intval(floor(($distance * $multiplier) / $accuracy));
+        $expectedDistance = strval(($distanceInAccuracyUnits / $multiplier) * $accuracy);
+
+        if ($expectedDistance !== $distance) {
+            throw new GridRefException('Accuracy + easting / northing mismatch');
+        }
     }
 
     public function getEasting(): string
