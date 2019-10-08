@@ -2,6 +2,7 @@
     "name": "xobble/grid",
     "type": "library",
     "description": "A small library to assist with converting between British National Grid, Irish Grid and Channel Islands Grid references and their cartesian representations",
+    "license": "MIT",
     "authors": [
         {
             "name": "Mark Allman",
