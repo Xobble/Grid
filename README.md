@@ -79,7 +79,7 @@ interface GridRef
 
 ## Cartesian class
 
-```
+```php
     $cart = new Cartesian('EPSG:27700', '651409', '313177', '1');
     
     echo $cart->getDatum();    // EPSG:27700
