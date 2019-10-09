@@ -29,6 +29,7 @@ class Cartesian
      */
     public function __construct(string $datum, string $easting, string $northing, string $accuracy)
     {
+        $this->checkAccuracyIsPowerOfTenWithIntegerExponent($accuracy);
         $this->checkAccuracyAgrees($accuracy, $easting);
         $this->checkAccuracyAgrees($accuracy, $northing);
 
@@ -51,6 +52,19 @@ class Cartesian
 
         if ($expectedDistance !== $distance) {
             throw new GridRefException('Accuracy + easting / northing mismatch');
+        }
+    }
+
+    /**
+     * @param string $accuracy
+     * @throws GridRefException
+     */
+    protected function checkAccuracyIsPowerOfTenWithIntegerExponent(string $accuracy)
+    {
+        $expectedAccuracy = strval(pow(10, intval(log10($accuracy))));
+
+        if ($expectedAccuracy !== $accuracy) {
+            throw new GridRefException('Accuracy must be a power of 10 with an integer exponent (e.g. 1, 10, 100, 1000...)');
         }
     }
 

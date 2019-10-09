@@ -31,7 +31,7 @@ class CartesianAccuracyMismatchTest extends TestCase
      *
      * @throws GridRefException
      */
-    public function testGridRefSupported(string $easting, string $northing, string $accuracy, bool $expectedToSucceed)
+    public function testAccuracyMismatch(string $easting, string $northing, string $accuracy, bool $expectedToSucceed)
     {
         if (!$expectedToSucceed) {
             $this->expectException(GridRefException::class);
