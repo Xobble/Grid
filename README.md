@@ -41,7 +41,6 @@ $converter->toCartesian('X622997');                  // EPSG:29902(262200, 99700
 $converter->toCartesian('WV305754');                 // EPSG:32630(530500, 5475400) [100m]
 
 // An UnsupportedRefException will be triggered for unsupported grid references or cartesian coordinates:
-
 $converter->toCartesian('AB22997');                  // UnsupportedRefException
 
 // A GridRefException will be triggered if trying to convert badly constructed Cartesians:
@@ -60,7 +59,7 @@ $converter->toGridRef($badCart2) ;
 
 * EPSG:27700 - class BritishGridRef - [British National Grid](https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid)
 * EPSG:29902 - class IrishGridRef - [Irish Grid](https://en.wikipedia.org/wiki/Irish_grid_reference_system)
-* EPSG:32630 - class - ChannelIslandsGridRef - [Channel Islands Grid](https://www.bwars.com/content/channel-islands-how-give-location-reference)
+* EPSG:32630 - class ChannelIslandsGridRef - [Channel Islands Grid](https://www.bwars.com/content/channel-islands-how-give-location-reference)
 
 ## GridRef interface
 
