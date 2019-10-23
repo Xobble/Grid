@@ -2,6 +2,7 @@
 
 namespace Xobble\Grid\GridRef;
 
+use Xobble\Grid\Exception\UnsupportedRefException;
 use Xobble\Grid\GridRef;
 use Xobble\Grid\Cartesian;
 
@@ -9,28 +10,12 @@ class ChannelIslandsGridRef implements GridRef
 {
     const GRID_SIZE = 100000;
 
-    public function supportsGridRef(string $gridRef): bool
-    {
-        if (!preg_match('/^W[AV](?P<number>[ \d]*)$/', $gridRef, $matches)) {
-            return false;
-        }
-
-        $number = str_replace(' ', '', $matches['number']);
-        return (strlen($number) % 2 === 0);
-    }
-
-    public function supportsCartesian(Cartesian $cartesian): bool
-    {
-        $northingPrefix = substr($cartesian->getNorthing(), 0, 2);
-        if ($northingPrefix !== '54' && $northingPrefix != '55') {
-            return false;
-        }
-
-        return $cartesian->getDatum() === $this->getDatum();
-    }
-
     public function toCartesian(string $gridRef): Cartesian
     {
+        if (!$this->supportsGridRef($gridRef)) {
+            throw new UnsupportedRefException();
+        }
+
         // As per...
         // https://www.bwars.com/content/channel-islands-how-give-location-reference
 
@@ -48,6 +33,10 @@ class ChannelIslandsGridRef implements GridRef
 
     public function toGridRef(Cartesian $cartesian): string
     {
+        if (!$this->supportsCartesian($cartesian)) {
+            throw new UnsupportedRefException();
+        }
+
         $northing = $cartesian->getNorthing();
         $isA = substr($northing, 0, 2) === '55';
         $accuracy = $cartesian->getAccuracy();
@@ -76,5 +65,25 @@ class ChannelIslandsGridRef implements GridRef
     public function getDatum(): string
     {
         return 'EPSG:32630';
+    }
+
+    protected function supportsCartesian(Cartesian $cartesian): bool
+    {
+        $northingPrefix = substr($cartesian->getNorthing(), 0, 2);
+        if ($northingPrefix !== '54' && $northingPrefix != '55') {
+            return false;
+        }
+
+        return $cartesian->getDatum() === $this->getDatum();
+    }
+
+    protected function supportsGridRef(string $gridRef): bool
+    {
+        if (!preg_match('/^W[AV](?P<number>[ \d]*)$/', $gridRef, $matches)) {
+            return false;
+        }
+
+        $number = str_replace(' ', '', $matches['number']);
+        return (strlen($number) % 2 === 0);
     }
 }

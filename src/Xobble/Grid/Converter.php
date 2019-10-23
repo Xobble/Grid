@@ -3,6 +3,7 @@
 namespace Xobble\Grid;
 
 use Xobble\Grid\Exception\GridRefException;
+use Xobble\Grid\Exception\UnsupportedRefException;
 
 class Converter
 {
@@ -25,12 +26,13 @@ class Converter
      */
     public function toCartesian(string $gridRef) : Cartesian {
         foreach($this->converters as $converter) {
-            if ($converter->supportsGridRef($gridRef)) {
+            try {
                 return $converter->toCartesian($gridRef);
             }
+            catch(UnsupportedRefException $e) {}
         }
 
-        throw new GridRefException('Invalid or unsupported grid reference');
+        throw new UnsupportedRefException('Unsupported grid reference');
     }
 
     /**
@@ -40,11 +42,12 @@ class Converter
      */
     public function toGridRef(Cartesian $cartesian) : string {
         foreach($this->converters as $converter) {
-            if ($converter->supportsCartesian($cartesian)) {
+            try {
                 return $converter->toGridRef($cartesian);
             }
+            catch(UnsupportedRefException $e) {}
         }
 
-        throw new GridRefException('Invalid or unsupported easting/northing');
+        throw new UnsupportedRefException('Unsupported Cartesian coordinates');
     }
 }

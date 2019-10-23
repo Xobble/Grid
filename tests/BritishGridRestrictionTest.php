@@ -3,6 +3,9 @@
 namespace Xobble\Grid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Xobble\Grid\Cartesian;
+use Xobble\Grid\Exception\GridRefException;
+use Xobble\Grid\Exception\UnsupportedRefException;
 use Xobble\Grid\GridRef\BritishGridRef;
 
 class BritishGridRestrictionTest extends TestCase
@@ -29,11 +32,20 @@ class BritishGridRestrictionTest extends TestCase
      *
      * @param string $gridRef
      * @param bool $expectedSupport
+     * @throws GridRefException
      */
     public function testGridRefSupported(string $gridRef, bool $expectedSupport)
     {
+        if (!$expectedSupport) {
+            $this->expectException(UnsupportedRefException::class);
+        }
+
         $britishGridRef = new BritishGridRef();
-        $this->assertEquals($expectedSupport, $britishGridRef->supportsGridRef($gridRef));
+        $cartesian = $britishGridRef->toCartesian($gridRef);
+
+        if ($expectedSupport) {
+            $this->assertInstanceOf(Cartesian::class, $cartesian);
+        }
     }
 
     public function dataTestCasesWhenNoRestrictions() {
@@ -58,14 +70,23 @@ class BritishGridRestrictionTest extends TestCase
      *
      * @param string $gridRef
      * @param bool $expectedSupport
+     * @throws GridRefException
      */
     public function testGridRefSupportedWhenNoRestrictions(string $gridRef, bool $expectedSupport)
     {
+        if (!$expectedSupport) {
+            $this->expectException(UnsupportedRefException::class);
+        }
+
         $britishGridRef = new BritishGridRef([
             'allowed_references' => null,
             'grid_exclude_channel_islands' => false,
         ]);
-        $this->assertEquals($expectedSupport, $britishGridRef->supportsGridRef($gridRef));
+        $cartesian = $britishGridRef->toCartesian($gridRef);
+
+        if ($expectedSupport) {
+            $this->assertInstanceOf(Cartesian::class, $cartesian);
+        }
     }
 
     public function dataChannelIslandTestCases() {
@@ -90,12 +111,21 @@ class BritishGridRestrictionTest extends TestCase
      *
      * @param string $gridRef
      * @param bool $expectedSupport
+     * @throws GridRefException
      */
     public function testGridRefSupportedWhenOnlyChannelIslandRestrictions(string $gridRef, bool $expectedSupport)
     {
+        if (!$expectedSupport) {
+            $this->expectException(UnsupportedRefException::class);
+        }
+
         $britishGridRef = new BritishGridRef([
             'allowed_references' => null,
         ]);
-        $this->assertEquals($expectedSupport, $britishGridRef->supportsGridRef($gridRef));
+        $cartesian = $britishGridRef->toCartesian($gridRef);
+
+        if ($expectedSupport) {
+            $this->assertInstanceOf(Cartesian::class, $cartesian);
+        }
     }
 }

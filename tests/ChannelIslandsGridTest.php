@@ -4,6 +4,7 @@ namespace Xobble\Grid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Xobble\Grid\Cartesian;
+use Xobble\Grid\Exception\GridRefException;
 use Xobble\Grid\GridRef\ChannelIslandsGridRef;
 
 class ChannelIslandsGridTest extends TestCase
@@ -29,6 +30,7 @@ class ChannelIslandsGridTest extends TestCase
      * @param string $expectedEasting
      * @param string $expectedNorthing
      * @param string $expectedAccuracy
+     * @throws GridRefException
      */
     public function testGridRefToCartesian(string $gridRef, string $expectedEasting, string $expectedNorthing, string $expectedAccuracy)
     {
@@ -47,6 +49,7 @@ class ChannelIslandsGridTest extends TestCase
      * @param string $easting
      * @param string $northing
      * @param string $accuracy
+     * @throws GridRefException
      */
     public function testCartesianToGridRef(string $gridRef, string $easting, string $northing, string $accuracy)
     {

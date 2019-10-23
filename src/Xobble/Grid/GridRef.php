@@ -2,14 +2,24 @@
 
 namespace Xobble\Grid;
 
+use Xobble\Grid\Exception\GridRefException;
+
 interface GridRef
 {
-    public function supportsGridRef(string $gridRef) : bool;
-    public function supportsCartesian(Cartesian $cartesian) : bool;
-
     public function getDatum() : string;
     public function getGridReferenceName() : string;
 
+    /**
+     * @param string $gridRef
+     * @return Cartesian
+     * @throws GridRefException
+     */
     public function toCartesian(string $gridRef) : Cartesian;
+
+    /**
+     * @param Cartesian $cartesian
+     * @return string
+     * @throws GridRefException
+     */
     public function toGridRef(Cartesian $cartesian) : string;
 }

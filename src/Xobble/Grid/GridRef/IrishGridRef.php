@@ -2,6 +2,7 @@
 
 namespace Xobble\Grid\GridRef;
 
+use Xobble\Grid\Exception\UnsupportedRefException;
 use Xobble\Grid\GridRef;
 use Xobble\Grid\Cartesian;
 
@@ -25,7 +26,34 @@ class IrishGridRef implements GridRef
         $this->options['allowed_references'] = $this->helper->processAllowedReferences($this->options['allowed_references']);
     }
 
-    public function supportsGridRef(string $gridRef) : bool
+    public function toCartesian(string $gridRef) : Cartesian
+    {
+        if (!$this->supportsGridRef($gridRef)) {
+            throw new UnsupportedRefException();
+        }
+
+        return $this->helper->toCartesian($gridRef);
+    }
+
+    public function toGridRef(Cartesian $cartesian) : string
+    {
+        if ($cartesian->getDatum() !== $this->getDatum()) {
+            throw new UnsupportedRefException();
+        }
+
+        return $this->helper->toGridRef($cartesian);
+    }
+
+    public function getGridReferenceName() : string {
+        return 'Irish Grid';
+    }
+
+    public function getDatum() : string
+    {
+        return 'EPSG:29902';
+    }
+
+    protected function supportsGridRef(string $gridRef) : bool
     {
         if (!preg_match('/^[A-HJ-Z](?P<number>[ \d]*)$/', $gridRef, $matches)) {
             return false;
@@ -39,29 +67,5 @@ class IrishGridRef implements GridRef
 
         $number = str_replace(' ', '', $matches['number']);
         return (strlen($number) % 2 === 0);
-    }
-
-    public function supportsCartesian(Cartesian $cartesian) : bool
-    {
-        return $cartesian->getDatum() === $this->getDatum();
-    }
-
-    public function toCartesian(string $gridRef) : Cartesian
-    {
-        return $this->helper->toCartesian($gridRef);
-    }
-
-    public function toGridRef(Cartesian $cartesian) : string
-    {
-        return $this->helper->toGridRef($cartesian);
-    }
-
-    public function getGridReferenceName() : string {
-        return 'Irish Grid';
-    }
-
-    public function getDatum() : string
-    {
-        return 'EPSG:29902';
     }
 }
