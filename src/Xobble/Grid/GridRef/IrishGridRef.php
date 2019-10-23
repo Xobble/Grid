@@ -20,7 +20,6 @@ class IrishGridRef implements GridRef
 
         $this->options = array_merge([
             'allowed_references' => null,
-            'grid_exclude_channel_islands' => true,
         ], $options);
 
         $this->options['allowed_references'] = $this->helper->processAllowedReferences($this->options['allowed_references']);
