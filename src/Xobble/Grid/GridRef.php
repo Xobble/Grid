@@ -6,7 +6,7 @@ use Xobble\Grid\Exception\GridRefException;
 
 interface GridRef
 {
-    public function getDatum() : string;
+    public function getDatum() : int;
     public function getGridReferenceName() : string;
 
     /**

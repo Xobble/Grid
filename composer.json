@@ -9,6 +9,11 @@
             "email": "mark@bixbite.co.uk"
         }
     ],
+    "autoload-dev": {
+        "psr-4": {
+            "Xobble\\Grid\\Tests\\": "tests/"
+        }
+    },
     "autoload": {
         "psr-4": {
             "Xobble\\": "src/Xobble/"
@@ -18,6 +23,8 @@
         "php": ">=7.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "phpstan/phpstan-shim": "^0.11.19",
+        "phpstan/extension-installer": "^1.0"
     }
 }

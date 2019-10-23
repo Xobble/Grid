@@ -48,9 +48,9 @@ class IrishGridRef implements GridRef
         return 'Irish Grid';
     }
 
-    public function getDatum() : string
+    public function getDatum() : int
     {
-        return 'EPSG:29902';
+        return 29902;
     }
 
     protected function supportsGridRef(string $gridRef) : bool

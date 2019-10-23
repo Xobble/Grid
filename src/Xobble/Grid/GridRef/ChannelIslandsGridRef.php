@@ -38,11 +38,11 @@ class ChannelIslandsGridRef implements GridRef
         }
 
         $northing = $cartesian->getNorthing();
-        $isA = substr($northing, 0, 2) === '55';
+        $isA = substr(strval($northing), 0, 2) === '55';
         $accuracy = $cartesian->getAccuracy();
 
         $gridRef = $isA ? 'WA' : 'WV';
-        $places = log10(self::GRID_SIZE) - log10($accuracy);
+        $places = intval(log10(self::GRID_SIZE) - log10($accuracy));
 
         $processPart = function($part) use($places) {
             $part = str_replace('.', '', $part);
@@ -51,8 +51,8 @@ class ChannelIslandsGridRef implements GridRef
             return $part;
         };
 
-        $eastingPart = $processPart(substr($cartesian->getEasting(), 1));
-        $northingPart = $processPart(substr($northing, 2));
+        $eastingPart = $processPart(substr(strval($cartesian->getEasting()), 1));
+        $northingPart = $processPart(substr(strval($northing), 2));
 
         return $gridRef.$eastingPart.$northingPart;
     }
@@ -62,14 +62,14 @@ class ChannelIslandsGridRef implements GridRef
         return 'Channel Islands Grid';
     }
 
-    public function getDatum(): string
+    public function getDatum(): int
     {
-        return 'EPSG:32630';
+        return 32630;
     }
 
     protected function supportsCartesian(Cartesian $cartesian): bool
     {
-        $northingPrefix = substr($cartesian->getNorthing(), 0, 2);
+        $northingPrefix = substr(strval($cartesian->getNorthing()), 0, 2);
         if ($northingPrefix !== '54' && $northingPrefix != '55') {
             return false;
         }

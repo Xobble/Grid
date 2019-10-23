@@ -3,10 +3,11 @@
 namespace Xobble\Grid\GridRef;
 
 use Xobble\Grid\Cartesian;
+use Xobble\Grid\Exception\GridRefException;
 
 class GridRefHelper
 {
-    /** @var string */
+    /** @var int */
     protected $datum;
 
     /** @var int */
@@ -15,10 +16,10 @@ class GridRefHelper
     /** @var int */
     protected $letterPositions;
 
-    /** @var int */
+    /** @var float */
     protected $eastingOriginOffset;
 
-    /** @var int */
+    /** @var float */
     protected $northingOriginOffset;
 
     /** @var array */
@@ -27,7 +28,7 @@ class GridRefHelper
     /** @var array */
     protected $reverseMapping;
 
-    public function __construct(string $datum, int $gridSize, int $letterPositions, int $eastingOriginOffset = 0, int $northingOriginOffset = 0)
+    public function __construct(int $datum, int $gridSize, int $letterPositions, float $eastingOriginOffset = 0.0, float $northingOriginOffset = 0.0)
     {
         $this->datum = $datum;
         $this->eastingOriginOffset = $eastingOriginOffset;
@@ -49,6 +50,11 @@ class GridRefHelper
         }
     }
 
+    /**
+     * @param string $gridRef
+     * @return Cartesian
+     * @throws GridRefException
+     */
     public function toCartesian(string $gridRef) : Cartesian
     {
         $gridRef = str_replace(' ', '', $gridRef);
@@ -89,7 +95,7 @@ class GridRefHelper
 
         // Determine letter parts
         for($z=0; $z<$this->letterPositions; $z++) {
-            $gridSize /= 5;
+            $gridSize = intval($gridSize / 5);
 
             list($i, $easting) = $this->getCountAndRemainder($easting, $gridSize);
             list($j, $northing) = $this->getCountAndRemainder($northing, $gridSize);
@@ -98,7 +104,7 @@ class GridRefHelper
         }
 
         $accuracy = $cartesian->getAccuracy();
-        $places = log10($gridSize) - log10($accuracy);
+        $places = intval(log10($gridSize) - log10($accuracy));
 
         $gridRef .= $this->padMeasurement($easting, $accuracy, $places);
         $gridRef .= $this->padMeasurement($northing, $accuracy, $places);
@@ -107,22 +113,29 @@ class GridRefHelper
     }
 
     public function processAllowedReferences($allowedReferences) : ?array {
-        return is_array($allowedReferences) ?
-            array_combine($allowedReferences, $allowedReferences) :
-            null;
+        if (!is_array($allowedReferences)) {
+            return null;
+        }
+
+        $processed = [];
+        foreach($allowedReferences as $allowedReference) {
+            $processed[$allowedReference] = $allowedReference;
+        }
+
+        return $processed;
     }
 
-    protected function getCountAndRemainder(int $x, int $size) : array {
+    protected function getCountAndRemainder(float $x, int $size) : array {
         $count = floor($x / $size);
         $remainder = $x - ($count * $size);
 
         return [$count, $remainder];
     }
 
-    protected function padMeasurement(int $measurement, float $accuracy, int $places) : string {
-        $measurement = str_replace('.', '', $measurement);
-        $measurement = intval($measurement) / $accuracy;
-        $measurement = substr(strval($measurement), 0, $places);
+    protected function padMeasurement(float $measurement, float $accuracy, int $places) : string {
+        $measurement = str_replace('.', '', strval($measurement));
+        $measurement = strval(intval($measurement) / $accuracy);
+        $measurement = substr($measurement, 0, $places);
 
         return str_pad($measurement, $places, '0', STR_PAD_LEFT);
     }

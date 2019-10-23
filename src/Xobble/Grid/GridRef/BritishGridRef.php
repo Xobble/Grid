@@ -56,9 +56,9 @@ class BritishGridRef implements GridRef
         return 'British National Grid';
     }
 
-    public function getDatum(): string
+    public function getDatum(): int
     {
-        return 'EPSG:27700';
+        return 27700;
     }
 
     protected function supportsGridRef(string $gridRef): bool
