@@ -79,35 +79,35 @@ interface GridRef
 ```
 
 ```php
-    use Xobble\Grid\Cartesian;
-    use Xobble\Grid\GridRef\BritishGridRef;
+use Xobble\Grid\Cartesian;
+use Xobble\Grid\GridRef\BritishGridRef;
     
-    $grid = new BritishGridRef();
+$grid = new BritishGridRef();
     
-    $grid->getGridReferenceName();                   // British National Grid
-    $grid->getDatum();                               // EPSG:27700
-    $grid->toCartesian('SR123456');                  // Returns a Cartesian - "EPSG:27700(112300, 145600) [100m]"
-    $grid->toCartesian('HL123456');                  // throws UnsupportedRefException
+$grid->getGridReferenceName();                   // British National Grid
+$grid->getDatum();                               // EPSG:27700
+$grid->toCartesian('SR123456');                  // Returns a Cartesian - "EPSG:27700(112300, 145600) [100m]"
+$grid->toCartesian('HL123456');                  // throws UnsupportedRefException
     
-    $cart1 = new Cartesian('EPSG:27700', '651409', '313177', '1');
-    $cart2 = new Cartesian('EPSG:29902', '651409', '313177', '1');
+$cart1 = new Cartesian('EPSG:27700', '651409', '313177', '1');
+$cart2 = new Cartesian('EPSG:29902', '651409', '313177', '1');
     
-    $ref1 = $grid->toGridRef($cart1);                // Returns a string - "TG5140913177"
-    $grid->toGridRef($cart2);                        // throws UnsupportedRefException
+$ref1 = $grid->toGridRef($cart1);                // Returns a string - "TG5140913177"
+$grid->toGridRef($cart2);                        // throws UnsupportedRefException
     
-    $grid->toCartesian($ref1);                       // EPSG:27700(651409, 313177) [1m]
+$grid->toCartesian($ref1);                       // EPSG:27700(651409, 313177) [1m]
 ```
 
 ## Cartesian class
 
 ```php
-    use Xobble\Grid\Cartesian;
+use Xobble\Grid\Cartesian;
 
-    $cart = new Cartesian('EPSG:27700', '651409', '313177', '1');
+$cart = new Cartesian('EPSG:27700', '651409', '313177', '1');
     
-    echo $cart->getDatum();    // EPSG:27700
-    echo $cart->getEasting();  // 651409
-    echo $cart->getNorthing(); // 313177
-    echo $cart->getAccuracy(); // 1
-    echo $cart;                // EPSG:27700(651409, 313177) [1m]
+echo $cart->getDatum();    // EPSG:27700
+echo $cart->getEasting();  // 651409
+echo $cart->getNorthing(); // 313177
+echo $cart->getAccuracy(); // 1
+echo $cart;                // EPSG:27700(651409, 313177) [1m]
 ```
