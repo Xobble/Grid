@@ -2,6 +2,7 @@
 
 namespace Xobble\Grid\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xobble\Grid\Cartesian;
 use Xobble\Grid\Exception\GridRefException;
@@ -10,7 +11,7 @@ use Xobble\Grid\GridRef\BritishGridRef;
 
 class BritishGridRestrictionTest extends TestCase
 {
-    public function dataTestCases() {
+    public static function dataTestCases(): array {
         return [
             ['HL00', false],
             ['TW00', false],
@@ -28,13 +29,10 @@ class BritishGridRestrictionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCases
-     *
-     * @param string $gridRef
-     * @param bool $expectedSupport
      * @throws GridRefException
      */
-    public function testGridRefSupported(string $gridRef, bool $expectedSupport)
+    #[DataProvider('dataTestCases')]
+    public function testGridRefSupported(string $gridRef, bool $expectedSupport): void
     {
         if (!$expectedSupport) {
             $this->expectException(UnsupportedRefException::class);
@@ -48,7 +46,7 @@ class BritishGridRestrictionTest extends TestCase
         }
     }
 
-    public function dataTestCasesWhenNoRestrictions() {
+    public static function dataTestCasesWhenNoRestrictions(): array {
         return [
             ['HL00', true],
             ['TW00', true],
@@ -66,13 +64,10 @@ class BritishGridRestrictionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCasesWhenNoRestrictions
-     *
-     * @param string $gridRef
-     * @param bool $expectedSupport
      * @throws GridRefException
      */
-    public function testGridRefSupportedWhenNoRestrictions(string $gridRef, bool $expectedSupport)
+    #[DataProvider('dataTestCasesWhenNoRestrictions')]
+    public function testGridRefSupportedWhenNoRestrictions(string $gridRef, bool $expectedSupport): void
     {
         if (!$expectedSupport) {
             $this->expectException(UnsupportedRefException::class);
@@ -89,7 +84,7 @@ class BritishGridRestrictionTest extends TestCase
         }
     }
 
-    public function dataChannelIslandTestCases() {
+    public static function dataChannelIslandTestCases(): array {
         return [
             ['HL00', true],
             ['TW00', true],
@@ -107,13 +102,10 @@ class BritishGridRestrictionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataChannelIslandTestCases
-     *
-     * @param string $gridRef
-     * @param bool $expectedSupport
      * @throws GridRefException
      */
-    public function testGridRefSupportedWhenOnlyChannelIslandRestrictions(string $gridRef, bool $expectedSupport)
+    #[DataProvider('dataChannelIslandTestCases')]
+    public function testGridRefSupportedWhenOnlyChannelIslandRestrictions(string $gridRef, bool $expectedSupport): void
     {
         if (!$expectedSupport) {
             $this->expectException(UnsupportedRefException::class);

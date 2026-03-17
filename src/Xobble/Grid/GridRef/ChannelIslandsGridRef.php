@@ -8,7 +8,7 @@ use Xobble\Grid\Cartesian;
 
 class ChannelIslandsGridRef implements GridRef
 {
-    const GRID_SIZE = 100000;
+    private const GRID_SIZE = 100000;
 
     public function toCartesian(string $gridRef): Cartesian
     {
@@ -20,7 +20,7 @@ class ChannelIslandsGridRef implements GridRef
         // https://www.bwars.com/content/channel-islands-how-give-location-reference
 
         $numberPart = substr($gridRef, 2);
-        $numberPartLength = strlen($numberPart) / 2;
+        $numberPartLength = (int) (strlen($numberPart) / 2);
         $accuracy = pow(10, log10(self::GRID_SIZE) - $numberPartLength);
 
         $northingPrefix = substr($gridRef, 0, 2) === 'WA' ? '55' : '54';
@@ -42,9 +42,9 @@ class ChannelIslandsGridRef implements GridRef
         $accuracy = $cartesian->getAccuracy();
 
         $gridRef = $isA ? 'WA' : 'WV';
-        $places = intval(log10(self::GRID_SIZE) - log10($accuracy));
+        $places = (int) (log10(self::GRID_SIZE) - log10($accuracy));
 
-        $processPart = function($part) use($places) {
+        $processPart = function(string $part) use($places): string {
             $part = str_replace('.', '', $part);
             $part = substr($part, 0, $places);
 
@@ -70,7 +70,7 @@ class ChannelIslandsGridRef implements GridRef
     protected function supportsCartesian(Cartesian $cartesian): bool
     {
         $northingPrefix = substr(strval($cartesian->getNorthing()), 0, 2);
-        if ($northingPrefix !== '54' && $northingPrefix != '55') {
+        if ($northingPrefix !== '54' && $northingPrefix !== '55') {
             return false;
         }
 

@@ -2,6 +2,7 @@
 
 namespace Xobble\Grid\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xobble\Grid\Cartesian;
 use Xobble\Grid\Exception\GridRefException;
@@ -9,9 +10,9 @@ use Xobble\Grid\GridRef\IrishGridRef;
 
 class IrishGridTest extends TestCase
 {
-    const DATUM = 29902;
+    private const DATUM = 29902;
 
-    public function dataTestCases() {
+    public static function dataTestCases(): array {
         return [
             ['O1590434671', 315904, 234671, 1],
             ['J 02598 74444', 302598, 374444, 1],
@@ -26,15 +27,10 @@ class IrishGridTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCases
-     *
-     * @param string $gridRef
-     * @param float $expectedEasting
-     * @param float $expectedNorthing
-     * @param float $expectedAccuracy
      * @throws GridRefException
      */
-    public function testGridRefToCartesian(string $gridRef, float $expectedEasting, float $expectedNorthing, float $expectedAccuracy)
+    #[DataProvider('dataTestCases')]
+    public function testGridRefToCartesian(string $gridRef, float $expectedEasting, float $expectedNorthing, float $expectedAccuracy): void
     {
         $britishGridRef = new IrishGridRef();
         $cartesian = $britishGridRef->toCartesian($gridRef);
@@ -45,15 +41,10 @@ class IrishGridTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCases
-     *
-     * @param string $gridRef
-     * @param float $easting
-     * @param float $northing
-     * @param float $accuracy
      * @throws GridRefException
      */
-    public function testCartesianToGridRef(string $gridRef, float $easting, float $northing, float $accuracy)
+    #[DataProvider('dataTestCases')]
+    public function testCartesianToGridRef(string $gridRef, float $easting, float $northing, float $accuracy): void
     {
         $britishGridRef = new IrishGridRef();
         $cartesian = new Cartesian(self::DATUM, $easting, $northing, $accuracy);

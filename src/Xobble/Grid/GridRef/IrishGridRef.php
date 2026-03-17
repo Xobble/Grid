@@ -9,20 +9,25 @@ use Xobble\Grid\Cartesian;
 class IrishGridRef implements GridRef
 {
     /** @var GridRefHelper */
-    protected $helper;
+    protected GridRefHelper $helper;
 
-    /** @var array */
-    protected $options;
+    /** @var array{allowed_references: ?array<string, string>} */
+    protected array $options;
 
+    /**
+     * @param array{allowed_references?: list<string>|null} $options
+     */
     public function __construct(array $options = [])
     {
         $this->helper = new GridRefHelper($this->getDatum(), 500000, 1);
 
-        $this->options = array_merge([
+        $mergedOptions = array_merge([
             'allowed_references' => null,
         ], $options);
 
-        $this->options['allowed_references'] = $this->helper->processAllowedReferences($this->options['allowed_references']);
+        $this->options = [
+            'allowed_references' => $this->helper->processAllowedReferences($mergedOptions['allowed_references']),
+        ];
     }
 
     public function toCartesian(string $gridRef) : Cartesian
@@ -60,7 +65,7 @@ class IrishGridRef implements GridRef
 
         $prefix = $gridRef[0];
 
-        if ($this->options['allowed_references'] && !isset($this->options['allowed_references'][$prefix])) {
+        if ($this->options['allowed_references'] !== null && !isset($this->options['allowed_references'][$prefix])) {
             return false;
         }
 

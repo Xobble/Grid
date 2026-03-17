@@ -8,25 +8,25 @@ use Xobble\Grid\Exception\GridRefException;
 class GridRefHelper
 {
     /** @var int */
-    protected $datum;
+    protected int $datum;
 
     /** @var int */
-    protected $initialGridSize;
+    protected int $initialGridSize;
 
     /** @var int */
-    protected $letterPositions;
+    protected int $letterPositions;
 
     /** @var float */
-    protected $eastingOriginOffset;
+    protected float $eastingOriginOffset;
 
     /** @var float */
-    protected $northingOriginOffset;
+    protected float $northingOriginOffset;
 
-    /** @var array */
-    protected $mapping;
+    /** @var array<string, array{int, int}> */
+    protected array $mapping;
 
-    /** @var array */
-    protected $reverseMapping;
+    /** @var array<int, array<int, string>> */
+    protected array $reverseMapping;
 
     public function __construct(int $datum, int $gridSize, int $letterPositions, float $eastingOriginOffset = 0.0, float $northingOriginOffset = 0.0)
     {
@@ -37,6 +37,7 @@ class GridRefHelper
         $this->initialGridSize = $gridSize;
 
         $this->mapping = [];
+        $this->reverseMapping = [];
 
         for ($j = 0; $j < 5; $j++) {
             for ($i = 0; $i < 5; $i++) {
@@ -67,7 +68,7 @@ class GridRefHelper
             $gridSize /= 5;
 
             $letter = substr($gridRef, 0, 1);
-            list($i, $j) = $this->mapping[$letter];
+            [$i, $j] = $this->mapping[$letter];
 
             $easting += ($gridSize * $i);
             $northing += ($gridSize * $j);
@@ -76,7 +77,7 @@ class GridRefHelper
         }
 
         // Deal with number part
-        $numberPartLength = strlen($gridRef) / 2;
+        $numberPartLength = (int) (strlen($gridRef) / 2);
         $accuracy = pow(10, log10($gridSize) - $numberPartLength);
 
         $easting += (intval(substr($gridRef, 0, $numberPartLength)) * $accuracy);
@@ -97,8 +98,8 @@ class GridRefHelper
         for($z=0; $z<$this->letterPositions; $z++) {
             $gridSize = intval($gridSize / 5);
 
-            list($i, $easting) = $this->getCountAndRemainder($easting, $gridSize);
-            list($j, $northing) = $this->getCountAndRemainder($northing, $gridSize);
+            [$i, $easting] = $this->getCountAndRemainder($easting, $gridSize);
+            [$j, $northing] = $this->getCountAndRemainder($northing, $gridSize);
 
             $gridRef .= $this->reverseMapping[$i][$j];
         }
@@ -112,8 +113,12 @@ class GridRefHelper
         return $gridRef;
     }
 
-    public function processAllowedReferences($allowedReferences) : ?array {
-        if (!is_array($allowedReferences)) {
+    /**
+     * @param list<string>|null $allowedReferences
+     * @return array<string, string>|null
+     */
+    public function processAllowedReferences(?array $allowedReferences) : ?array {
+        if ($allowedReferences === null) {
             return null;
         }
 
@@ -125,8 +130,11 @@ class GridRefHelper
         return $processed;
     }
 
+    /**
+     * @return array{int, float}
+     */
     protected function getCountAndRemainder(float $x, int $size) : array {
-        $count = floor($x / $size);
+        $count = (int) floor($x / $size);
         $remainder = $x - ($count * $size);
 
         return [$count, $remainder];

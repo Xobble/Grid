@@ -2,6 +2,7 @@
 
 namespace Xobble\Grid\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xobble\Grid\Cartesian;
 use Xobble\Grid\Exception\GridRefException;
@@ -10,7 +11,7 @@ use Xobble\Grid\GridRef\IrishGridRef;
 
 class IrishGridRestrictionTest extends TestCase
 {
-    public function dataTestCases() {
+    public static function dataTestCases(): array {
         return [
             ['A00', true],
             ['B00', true],
@@ -24,13 +25,10 @@ class IrishGridRestrictionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCases
-     *
-     * @param string $gridRef
-     * @param bool $expectedSupport
      * @throws GridRefException
      */
-    public function testGridRefSupported(string $gridRef, bool $expectedSupport)
+    #[DataProvider('dataTestCases')]
+    public function testGridRefSupported(string $gridRef, bool $expectedSupport): void
     {
         if (!$expectedSupport) {
             $this->expectException(UnsupportedRefException::class);
@@ -44,7 +42,7 @@ class IrishGridRestrictionTest extends TestCase
         }
     }
 
-    public function dataTestCasesWhenRestricted() {
+    public static function dataTestCasesWhenRestricted(): array {
         return [
             ['A00', false],
             ['B00', false],
@@ -58,13 +56,10 @@ class IrishGridRestrictionTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCasesWhenRestricted
-     *
-     * @param string $gridRef
-     * @param bool $expectedSupport
      * @throws GridRefException
      */
-    public function testGridRefSupportedWhenRestricted(string $gridRef, bool $expectedSupport)
+    #[DataProvider('dataTestCasesWhenRestricted')]
+    public function testGridRefSupportedWhenRestricted(string $gridRef, bool $expectedSupport): void
     {
         if (!$expectedSupport) {
             $this->expectException(UnsupportedRefException::class);

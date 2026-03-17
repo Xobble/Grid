@@ -2,13 +2,14 @@
 
 namespace Xobble\Grid\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Xobble\Grid\Cartesian;
 use Xobble\Grid\Exception\GridRefException;
 
 class CartesianAccuracyTest extends TestCase
 {
-    public function dataTestCases() {
+    public static function dataTestCases(): array {
         return [
             [1, true],
             [100, true],
@@ -23,14 +24,10 @@ class CartesianAccuracyTest extends TestCase
     }
 
     /**
-     * @dataProvider dataTestCases
-     *
-     * @param float $accuracy
-     * @param bool $expectedToSucceed
-     *
      * @throws GridRefException
      */
-    public function testAccuracyIsPowerOf10WithIntegerExponent(float $accuracy, bool $expectedToSucceed)
+    #[DataProvider('dataTestCases')]
+    public function testAccuracyIsPowerOf10WithIntegerExponent(float $accuracy, bool $expectedToSucceed): void
     {
         if (!$expectedToSucceed) {
             $this->expectException(GridRefException::class);
@@ -42,5 +39,4 @@ class CartesianAccuracyTest extends TestCase
             $this->assertInstanceOf(Cartesian::class, $cartesian);
         }
     }
-
 }

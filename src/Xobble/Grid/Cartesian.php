@@ -58,7 +58,7 @@ class Cartesian
      * @param float $accuracy
      * @throws GridRefException
      */
-    protected function checkAccuracyIsPowerOfTenWithIntegerExponent(float $accuracy)
+    protected function checkAccuracyIsPowerOfTenWithIntegerExponent(float $accuracy): void
     {
         $expectedAccuracy = floatval(pow(10, intval(log10($accuracy))));
 
